@@ -1,0 +1,30 @@
+<div id="chart"></div>
+<div class="container">
+  <div id="infoBox" style="opacity: 1;">
+    <div class="btn-group" uib-dropdown keyboard-nav>
+        <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
+            Select County <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+            <li ng-repeat="counties in mapRegionss | orderBy" role="menuitem"><a href="#" ng-click="hitMap(counties.url, counties.label)">{{counties.label}}</a></li>
+        </ul>
+    </div>
+    <div class="btn-group" uib-dropdown keyboard-nav>
+        <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
+            Select Store <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+            <li ng-repeat="stores in outletList" role="menuitem"><a href="#" ng-click="changeStore(stores.storeName)">{{stores.storeName}}</a></li>
+        </ul>
+    </div>
+  </div>
+
+  <div id="chartInfo">
+    <p ng-bind="regionName"></p>
+    <p ng-bind="storeName" ng-show="storeName"></p>
+  </div>
+  <script type="text/javascript">
+      var body = d3.select("body");
+      ts.choropleth.draw(body);
+  </script>
+</div>

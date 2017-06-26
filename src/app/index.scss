@@ -1,0 +1,66 @@
+/**
+ *  If you want to override some bootstrap variables, you have to change values here.
+ *  The list of variables are listed here bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss
+ */
+$navbar-inverse-link-color: #5AADBB;
+$icon-font-path: "../../bootstrap-sass/assets/fonts/bootstrap/";
+
+/**
+ *  Do not remove the comments below. It's the markers used by wiredep to inject
+ *  sass dependencies when defined in the bower.json of your dependencies
+ */
+// bower:scss
+// endbower
+
+
+svg{
+  width: 100%;
+  position: absolute;
+  height: 80%;
+  z-index: -1;
+  top: 10%;
+  .county{
+    path{
+      fill: #eaeaea;
+      pointer-events: visible;
+      stroke: #646464;
+      stroke-width: 1px;
+      stroke-dasharray: 1,1;
+      stroke-linejoin: round;
+      &:hover {
+          fill: green;
+      }
+      &.active {
+          fill: #696969;
+      }
+    }
+  }
+}
+
+#infoBox{
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  .dropdown-menu{
+    max-height: 300px;
+    overflow: auto;
+  }
+}
+#chartInfo{
+  top: 60px;
+  position: absolute;
+  left: 20px;
+}
+#chart{
+  position: absolute;
+  width: 100%;
+  left: 10px;
+  bottom: 0;
+  height: 100px;
+}
+/**
+ *  Do not remove the comments below. It's the markers used by gulp-inject to inject
+ *  all your sass files automatically
+ */
+// injector
+// endinjector
