@@ -27,9 +27,9 @@ svg{
       stroke-width: 1px;
       stroke-dasharray: 1,1;
       stroke-linejoin: round;
-      &:hover {
-          fill: green;
-      }
+      // &:hover {
+      //     fill: green;
+      // }
       &.active {
           fill: #696969;
       }
@@ -52,11 +52,9 @@ svg{
   left: 20px;
 }
 #chart{
-  position: absolute;
-  width: 100%;
-  left: 10px;
-  bottom: 0;
-  height: 100px;
+  .bar{
+    fill: #80b0da;
+  }
 }
 /**
  *  Do not remove the comments below. It's the markers used by gulp-inject to inject

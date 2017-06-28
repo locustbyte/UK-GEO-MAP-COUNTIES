@@ -1,4 +1,4 @@
-﻿var ts = ts || {};
+var ts = ts || {};
 ts.choropleth = (function () {
     "use strict";
     var body,
