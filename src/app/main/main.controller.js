@@ -15,6 +15,7 @@
 
     //A function which will search an array object
     vm.findProp = function(obj, key, out) {
+      //console.log(obj)
         var i,
             proto = Object.prototype,
             ts = proto.toString,
@@ -44,16 +45,67 @@
     //chosen store name variable
     vm.storeName = false;
     vm.outletList = storeData.stores
-    vm.loadStats = function(county){
-      $("#chart svg").remove();
-      var barChartData = [];
-      barChartData = vm.findProp(vm.countyStat, county);
+    vm.barChartData = [];
+    vm.loadStats = function(type, county){
 
-      if ( barChartData.length > 0) {
+      if ( type === "county") {
 
-        var dataArray = [{"name": "Nurse", "value": jQuery.grep(barChartData[0], function (person) { return person.profession == "nurse" }).length},{"name": "Pharmacist", "value": jQuery.grep(barChartData[0], function (person) { return person.profession == "pharmacist" }).length}];
-        var dataArray = [jQuery.grep(barChartData[0], function (person) { return person.profession == "nurse" }).length, jQuery.grep(barChartData[0], function (person) { return person.profession == "pharmacist" }).length];
-        // Create variable for the SVG
+        $("#chart svg").remove();
+
+        vm.barChartData = vm.findProp(vm.countyStat, county);
+        localStorage.setItem('county_data', JSON.stringify(vm.barChartData));
+
+
+        if ( vm.barChartData.length > 0) {
+          //console.log(vm.barChartData)
+          //var dataArray = [{"name": "Nurse", "value": jQuery.grep(vm.barChartData[0], function (person) { return person.profession == "nurse" }).length},{"name": "Pharmacist", "value": jQuery.grep(vm.barChartData[0], function (person) { return person.profession == "pharmacist" }).length}];
+          var dataArray = [jQuery.grep(vm.barChartData[0], function (person) { return person.profession == "nurse" }).length, jQuery.grep(vm.barChartData[0], function (person) { return person.profession == "pharmacist" }).length];
+          localStorage.setItem('barchart_data', JSON.stringify(dataArray));
+          // Create variable for the SVG
+          var svg = d3.select("#chart").append("svg")
+                    .attr("height","100%")
+                    .attr("width","100%");
+
+          // Select, append to SVG, and add attributes to rectangles for bar chart
+          svg.selectAll("rect")
+              .data(dataArray)
+              .enter().append("rect")
+                    .attr("class", "bar")
+                    .attr("height", function(d, i) {return (d * 10)})
+                    .attr("width","40")
+                    .attr("x", function(d, i) {return (i * 60) + 25})
+                    .attr("y", function(d, i) {return 400 - (d * 10)});
+
+          // Select, append to SVG, and add attributes to text
+          svg.selectAll("text")
+              .data(dataArray)
+              .enter().append("text")
+              .text(function(d) {return d})
+                     .attr("class", "text")
+                     .attr("x", function(d, i) {return (i * 60) + 36})
+                     .attr("y", function(d, i) {return 400 - (d * 10)});
+        }
+
+      }
+
+      if ( type === "store") {
+
+        vm.storeName = county;
+        // var countyData = JSON.parse(localStorage.getItem('county_data'))
+        //
+        // var barChartDataStore = [];
+        // barChartDataStore = vm.findProp(countyData, "tesco")
+
+        // console.log("below")
+        console.log(county)
+        // console.log("above")
+
+        //var dataArray = [{"name": "Nurse", "value": jQuery.grep(vm.barChartData[0], function (person) { return person.profession == "nurse" }).length},{"name": "Pharmacist", "value": jQuery.grep(vm.barChartData[0], function (person) { return person.profession == "pharmacist" }).length}];
+        var dataArray = [jQuery.grep(vm.barChartData[0], function (person) { return person.profession == "nurse" && person.customer_group == county }).length, jQuery.grep(vm.barChartData[0], function (person) { return person.profession == "pharmacist"  && person.customer_group == county }).length];
+
+        console.log(dataArray)
+
+        $("#chart svg").remove();
         var svg = d3.select("#chart").append("svg")
                   .attr("height","100%")
                   .attr("width","100%");
@@ -76,7 +128,11 @@
                    .attr("class", "text")
                    .attr("x", function(d, i) {return (i * 60) + 36})
                    .attr("y", function(d, i) {return 400 - (d * 10)});
+
+
+
       }
+
 
     }
 
@@ -84,13 +140,13 @@
     vm.hitMap = function(d, i) {
       vm.regionName = "Region: " + i;
       //calls the load stats which will draw data if exists for this county
-      vm.loadStats(i);
+      vm.loadStats("county", i);
       //Simulate the click after we do other things, the actions are defined in the click event in the chloropeth.js file.
       $("[d='"+d+"']").d3Click();
     }
     //Respond to store filter - should load bar chart for 'store' showing Nurses and Phamacists data
     vm.changeStore = function(storeName){
-      vm.loadStats(storeName);
+      vm.loadStats("store", storeName);
     }
     angular.element(document).ready(function() {
 
