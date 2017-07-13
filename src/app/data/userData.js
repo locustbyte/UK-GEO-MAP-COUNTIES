@@ -70,7 +70,7 @@ var userData = {
       {
         "username": "2046351",
         "profession": "pharmacist",
-        "customer_group": "asda"
+        "customer_group": "Asda"
       }
     ],
     "Bromley": [

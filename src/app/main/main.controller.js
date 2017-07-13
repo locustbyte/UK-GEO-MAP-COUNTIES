@@ -57,8 +57,6 @@
 
 
         if ( vm.barChartData.length > 0) {
-          //console.log(vm.barChartData)
-          //var dataArray = [{"name": "Nurse", "value": jQuery.grep(vm.barChartData[0], function (person) { return person.profession == "nurse" }).length},{"name": "Pharmacist", "value": jQuery.grep(vm.barChartData[0], function (person) { return person.profession == "pharmacist" }).length}];
           var dataArray = [jQuery.grep(vm.barChartData[0], function (person) { return person.profession == "nurse" }).length, jQuery.grep(vm.barChartData[0], function (person) { return person.profession == "pharmacist" }).length];
           localStorage.setItem('barchart_data', JSON.stringify(dataArray));
           // Create variable for the SVG
@@ -91,19 +89,7 @@
       if ( type === "store") {
 
         vm.storeName = county;
-        // var countyData = JSON.parse(localStorage.getItem('county_data'))
-        //
-        // var barChartDataStore = [];
-        // barChartDataStore = vm.findProp(countyData, "tesco")
-
-        // console.log("below")
-        console.log(county)
-        // console.log("above")
-
-        //var dataArray = [{"name": "Nurse", "value": jQuery.grep(vm.barChartData[0], function (person) { return person.profession == "nurse" }).length},{"name": "Pharmacist", "value": jQuery.grep(vm.barChartData[0], function (person) { return person.profession == "pharmacist" }).length}];
         var dataArray = [jQuery.grep(vm.barChartData[0], function (person) { return person.profession == "nurse" && person.customer_group == county }).length, jQuery.grep(vm.barChartData[0], function (person) { return person.profession == "pharmacist"  && person.customer_group == county }).length];
-
-        console.log(dataArray)
 
         $("#chart svg").remove();
         var svg = d3.select("#chart").append("svg")
